@@ -1,17 +1,13 @@
-import './App.css'
+// src/App.jsx
+import { BrowserRouter } from 'react-router-dom';
+import AppRoutes from './routes/AppRoutes';
 
-function App() {
-
+const App = () => {
   return (
-    <>
-      <h1>Vite + React</h1>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  );
+};
 
-      <div class="text-5xl font-bold underline">
-        Hello world!
-      </div>
-      
-    </>
-  )
-}
-
-export default App
+export default App;
