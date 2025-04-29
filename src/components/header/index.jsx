@@ -1,8 +1,9 @@
+import { useAuth } from "context/AuthContext";
+import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 
-Link
 const Header = ({ onToggleSidebar }) => {
-  const isLoggedIn = false; // Replace with actual auth logic
+  const { user={} } = useAuth();
 
   return (
     <header className="flex items-center justify-between px-4 py-3 bg-white shadow-md"
@@ -16,12 +17,10 @@ const Header = ({ onToggleSidebar }) => {
       </div>
 
       <div>
-        {isLoggedIn ? (
-          <img
-            src="/avatar.png"
-            alt="Profile"
-            className="w-8 h-8 rounded-full"
-          />
+        {user ? (
+          <>
+          hey, {user.name || 'Guest'}
+          </>
         ) : (
           <div className="space-x-2 text-blue-500 font-bold">
             <Link to='/signin'><button>Sign In</button></Link>

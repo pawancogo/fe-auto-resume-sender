@@ -1,12 +1,11 @@
 import { useState, useCallback } from 'react';
-import axios from '../services/axios';
-
+import axios from '@/services/axios';
 const useApi = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const request = useCallback(async (method, url, payload = {}, config = {}) => {
+  const request = useCallback(async (method, url, payload = {}, config = { authTokenRequired: true }) => {
     setLoading(true);
     setError(null);
     try {

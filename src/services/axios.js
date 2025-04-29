@@ -12,13 +12,11 @@ const axiosInstance = axios.create({
 // 📤 Request Interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Example: Add token from localStorage
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
-
-    // console.log('📤 Request:', config.method?.toUpperCase(), config.url);
+    console.log("config", config)
+    if(config.authTokenRequired){
+      const token = Cookies.get('authtoken');
+      config.headers.authtoken = token;
+    }
     return config;
   },
   (error) => {

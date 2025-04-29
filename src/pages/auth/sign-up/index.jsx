@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import useApi from '../../../hooks/useApi';
+import useApi from '@/hooks/useApi'
 const SignUp = () => {
-  const { data, error, loading, request } = useApi();
+  const { error, loading, request } = useApi();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,16 +24,15 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async(e) => {    
     e.preventDefault();
-    const payload = { user: formData }
-    request('post', '/users/signup', payload)
-
+    
     // before submit validate form data 
-
-    // Store user locally just for demo purposes
-    // localStorage.setItem('user', JSON.stringify({ email }));
-    // navigate('/dashboard');
+    const payload = { user: formData }
+    const response = await request('post', '/users/signup', payload, { authTokenRequired: false })
+    if(response?.data){
+      navigate('/signin')
+    }
   };
 
   return (
@@ -85,7 +84,7 @@ const SignUp = () => {
         />
 
         <div>{Object.values(errors).map((error, i) => <div key={Date.now() + i}> {error && `- ${error}`}</div>)}</div>
-
+        {error?.errors?.length && <div>{error.errors.join(', ')}</div>}
         <button
           type="submit"
           className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"

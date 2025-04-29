@@ -5,8 +5,9 @@ import SignIn from '../pages/auth/sign-in';
 import SignUp from '../pages/auth/sign-up';
 import NotFound from '../pages/not-found';
 
-const AppRoutes = () => (
-  <Routes>
+const AppRoutes = () => {
+  return (
+    <Routes>
     <Route path="/" element={<MainLayout />}>
       <Route path="dashboard" element={<Dashboard />} />
       {/* more nested routes */}
@@ -16,6 +17,8 @@ const AppRoutes = () => (
     </Route>
     
   </Routes>
-);
+  )
+}
+;
 
 export default AppRoutes;

@@ -1,22 +1,40 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import useApi from '@/hooks/useApi';
+import { useAuth } from '@/context/AuthContext';
+
 const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { setUser }  = useAuth();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
+
   const navigate = useNavigate();
+  const { error, loading, request } = useApi();
 
-  const handleSignIn = (e) => {
+  const handlechange = (e)=>{
+    setFormData({...formData, [e.target.name]: e.target.value})
+  }
+
+  const handleSignIn = async(e) => {
     e.preventDefault();
-
-    // Dummy auth logic
-    if (email === 'test@example.com' && password === 'password') {
-      localStorage.setItem('user', JSON.stringify({ email }));
-      navigate('/dashboard');
-    } else {
-      alert('Invalid credentials');
+    const payload = {
+      user: formData
+    }
+    const response = await request('post', 'users/signin', payload, { authTokenRequired: false })
+    console.log(response)
+    if(response?.data){
+      Cookies.set('authtoken', response?.data?.token, { expires: 1 });
+      setUser(response.data);
+      navigate('/');
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
     }
   };
-
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form
@@ -26,20 +44,22 @@ const SignIn = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">Sign In</h2>
 
         <input
+          name='email'
           type="email"
           placeholder="Email"
           className="w-full p-2 mb-4 border rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={handlechange}
           required
         />
 
         <input
+          name='password'
           type="password"
           placeholder="Password"
           className="w-full p-2 mb-4 border rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handlechange}
           required
         />
 
