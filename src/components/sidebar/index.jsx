@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const Sidebar = ({ isOpen, setSidebarOpen }) => {
   return (
     <>
@@ -29,10 +30,9 @@ const Sidebar = ({ isOpen, setSidebarOpen }) => {
           </div>
         </div>
 
-        <ul className="p-4 space-y-2">
-          <li className="hover:bg-gray-100 p-2 rounded">Dashboard</li>
-          <li className="hover:bg-gray-100 p-2 rounded">Profile</li>
-          <li className="hover:bg-gray-100 p-2 rounded">Settings</li>
+        <ul className="p-4 space-y-2 flex flex-col">
+          <Link to='/dashboard' className="hover:bg-gray-100 p-2 rounded">Dashboard</Link >
+          <Link to='/profile' className="hover:bg-gray-100 p-2 rounded">Profile</Link >
         </ul>
       </div>
     </>
