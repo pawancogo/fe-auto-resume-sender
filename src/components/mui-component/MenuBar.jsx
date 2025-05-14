@@ -12,9 +12,10 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from 'react-router-dom';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Dashboard', 'Profile'];
+const settings = ['Profile', 'Logout'];
 
 function MenuBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -55,7 +56,7 @@ function MenuBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Resume Sender
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -109,18 +110,9 @@ function MenuBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Resume Sender
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -146,7 +138,8 @@ function MenuBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                  
+                  <Link to={`/${setting.toLowerCase()}`  } style={{ textDecoration: 'none', color: 'inherit' }}><Typography sx={{ textAlign: 'center' }}>{setting}</Typography></Link>
                 </MenuItem>
               ))}
             </Menu>
